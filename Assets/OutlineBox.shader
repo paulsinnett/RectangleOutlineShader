@@ -29,7 +29,6 @@ Shader "Unlit/OutlineBoxShader"
             };
 
             float _Width;
-            float2 _ScreenSize;
 
             v2f vert (appdata v)
             {
