@@ -23,16 +23,17 @@ public class OutlineBox : MonoBehaviour
             new Vector3(0.0f, 0.0f, 0f)
         };
 
-        mesh.normals = new Vector3[]
-        {   
-            new Vector3(-0.707f, 0.707f, 0f),
-            new Vector3(0.707f, 0.707f, 0f),
-            new Vector3(0.707f, -0.707f, 0f),
-            new Vector3(-0.707f, -0.707f, 0f),
-            new Vector3(0.707f, -0.707f, 0f),
-            new Vector3(-0.707f, -0.707f, 0f),
-            new Vector3(-0.707f, 0.707f, 0f),
-            new Vector3(0.707f, 0.707f, 0f)
+        mesh.uv = new Vector2[]
+        {
+            // note: in clip space y is upside down
+            new Vector2(-1.0f, -1.0f),
+            new Vector2(1.0f, -1.0f),
+            new Vector2(1.0f, 1.0f),
+            new Vector2(-1.0f, 1.0f),
+            new Vector2(0.0f, 0.0f),
+            new Vector2(0.0f, 0.0f),
+            new Vector2(0.0f, 0.0f),
+            new Vector2(0.0f, 0.0f)
         };
 
         mesh.triangles = new int[]

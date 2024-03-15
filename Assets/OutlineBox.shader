@@ -2,7 +2,7 @@ Shader "Unlit/OutlineBoxShader"
 {
     Properties
     {
-        _Width ("Outline Width", Range(0.0, 10)) = 5
+        _Width ("Outline Width", Range(0, 10)) = 1
     }
     SubShader
     {
@@ -20,7 +20,7 @@ Shader "Unlit/OutlineBoxShader"
             struct appdata
             {
                 float4 vertex : POSITION;
-                float3 normal : NORMAL;
+                float2 uv : TEXCOORD0;
             };
             
             struct v2f
@@ -29,14 +29,16 @@ Shader "Unlit/OutlineBoxShader"
             };
 
             float _Width;
+            float2 _ScreenSize;
 
             v2f vert (appdata v)
             {
                 v2f o;
-                float3 x = normalize(mul((float3x3)unity_ObjectToWorld, float3(1, 0, 0)));
-                float3 y = normalize(mul((float3x3)unity_ObjectToWorld, float3(0, 1, 0)));
-                float4 world = mul(unity_ObjectToWorld, v.vertex) + float4((x * v.normal.x + y * v.normal.y) * _Width, 0);
-                o.vertex = mul(UNITY_MATRIX_VP, world);
+                float4 clip = UnityObjectToClipPos(v.vertex);
+                // in Unity clip space is -1 to 1 so pixels are twice the size
+                float2 pixelSize = 2 * (_ScreenParams.zw - float2(1, 1));
+                clip.xy += v.uv * _Width * pixelSize;
+                o.vertex = clip;
                 return o;
             }
 
